@@ -112,10 +112,12 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    home: Home;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    home: HomeSelect<false> | HomeSelect<true>;
   };
   locale: null;
   widgets: {
@@ -1691,6 +1693,28 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home".
+ */
+export interface Home {
+  id: number;
+  hero_title?: string | null;
+  hero_subtitle?: string | null;
+  hero_image?: (number | null) | Media;
+  hero_post?: (number | null) | Post;
+  featured_posts?: (number | Post)[] | null;
+  category_sections?:
+    | {
+        category: number | Category;
+        limit?: number | null;
+        id?: string | null;
+      }[]
+    | null;
+  latest_news_limit?: number | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -1731,6 +1755,28 @@ export interface FooterSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home_select".
+ */
+export interface HomeSelect<T extends boolean = true> {
+  hero_title?: T;
+  hero_subtitle?: T;
+  hero_image?: T;
+  hero_post?: T;
+  featured_posts?: T;
+  category_sections?:
+    | T
+    | {
+        category?: T;
+        limit?: T;
+        id?: T;
+      };
+  latest_news_limit?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
