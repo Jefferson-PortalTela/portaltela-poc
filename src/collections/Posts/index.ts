@@ -48,7 +48,7 @@ export const Posts: CollectionConfig<'posts'> = {
     },
   },
   admin: {
-    defaultColumns: ['title', 'slug', 'updatedAt'],
+    defaultColumns: ['title', 'slug', 'updatedAt', 'shareAction'],
     livePreview: {
       url: ({ data, req }) =>
         generatePreviewPath({
@@ -213,6 +213,17 @@ export const Posts: CollectionConfig<'posts'> = {
           type: 'text',
         },
       ],
+    },
+    {
+      name: 'shareAction',
+      type: 'ui',
+      admin: {
+        disableListColumn: false,
+        components: {
+          Cell: '@/app/(payload)/components/posts/ShareActionCell#ShareActionCell',
+        },
+      },
+      label: 'Redes',
     },
     slugField(),
   ],
