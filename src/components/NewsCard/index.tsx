@@ -11,6 +11,17 @@ export interface PostCardData {
   slug: string
   heroImage?: Media | null
   categories?: (Category | string)[] | null
+  meta?:
+    | {
+        description?: string | null
+      }
+    | null
+  populatedAuthors?:
+    | {
+        id?: string | null
+        name?: string | null
+      }[]
+    | null
   publishedAt?: string | null
 }
 

@@ -8,6 +8,8 @@ const SELECT_FIELDS = {
   slug: true,
   heroImage: true,
   categories: true,
+  meta: true,
+  populatedAuthors: true,
   publishedAt: true,
 } as const
 

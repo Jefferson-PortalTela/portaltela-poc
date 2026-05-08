@@ -222,3 +222,11 @@ html[data-theme='dark'],
 html[data-theme='light'] {
   opacity: initial;
 }
+
+html[data-theme='light'] {
+  color-scheme: light;
+}
+
+html[data-theme='dark'] {
+  color-scheme: dark;
+}
