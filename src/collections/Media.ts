@@ -30,6 +30,13 @@ export const Media: CollectionConfig = {
       //required: true,
     },
     {
+      name: 'externalUrl',
+      type: 'text',
+      admin: {
+        description: 'URL externa (ex: S3, CDN). Sobrescreve a url local.',
+      },
+    },
+    {
       name: 'caption',
       type: 'richText',
       editor: lexicalEditor({
@@ -39,6 +46,24 @@ export const Media: CollectionConfig = {
       }),
     },
   ],
+  hooks: {
+    afterRead: [
+      ({ doc }) => {
+        if (doc.externalUrl) {
+          doc.url = doc.externalUrl
+          // sobrescreve também as sizes para usar a mesma URL externa
+          if (doc.sizes) {
+            Object.keys(doc.sizes).forEach((key) => {
+              if (doc.sizes[key]) {
+                doc.sizes[key].url = doc.externalUrl
+              }
+            })
+          }
+        }
+        return doc
+      },
+    ],
+  },
   upload: {
     // Upload to the public/media directory in Next.js making them publicly accessible even outside of Payload
     staticDir: path.resolve(dirname, '../../public/media'),

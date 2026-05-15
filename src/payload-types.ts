@@ -279,6 +279,10 @@ export interface Post {
 export interface Media {
   id: number;
   alt?: string | null;
+  /**
+   * URL externa (ex: S3, CDN). Sobrescreve a url local.
+   */
+  externalUrl?: string | null;
   caption?: {
     root: {
       type: string;
@@ -1227,6 +1231,7 @@ export interface PostsSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  externalUrl?: T;
   caption?: T;
   folder?: T;
   updatedAt?: T;
