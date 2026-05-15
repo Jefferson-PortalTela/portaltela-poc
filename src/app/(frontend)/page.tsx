@@ -3,9 +3,7 @@ import type { Metadata } from 'next'
 import {
   PortalHomePage,
   type CategoryShelfData,
-  type EconomicIndicator,
   type HomeStory,
-  type WeatherForecast,
 } from '@/components/home/PortalHomePage'
 import {
   fetchFallbackFeatured,
@@ -35,7 +33,9 @@ const normalizePost = (post: HomeStory | Post | number | null | undefined): Home
     heroImage:
       post.heroImage && typeof post.heroImage === 'object' ? (post.heroImage as Media) : null,
     categories: Array.isArray(post.categories)
-      ? post.categories.map((category) => (typeof category === 'object' ? category : String(category)))
+      ? post.categories.map((category) =>
+          typeof category === 'object' ? category : String(category),
+        )
       : null,
     meta: 'meta' in post ? post.meta : null,
     populatedAuthors: 'populatedAuthors' in post ? post.populatedAuthors : null,
@@ -74,12 +74,45 @@ const buildFallbackShelves = (posts: HomeStory[]): CategoryShelfData[] => {
 
 const buildSocialBuzz = (posts: HomeStory[]) => {
   const platforms = [
-    { platform: 'X', handle: '@portaltela', sentiment: 'Aceleracao positiva', engagement: '+2.4k mencoes' },
-    { platform: 'Instagram', handle: '@portaltela.news', sentiment: 'Salvos em alta', engagement: '+1.1k compartilhamentos' },
-    { platform: 'Threads', handle: '@portaltela.debate', sentiment: 'Conversas quentes', engagement: '+820 respostas' },
+    {
+      platform: 'Instagram',
+      handle: '@portaltela.news',
+      sentiment: 'Salvos em alta',
+      engagement: '+1.1k compartilhamentos',
+    },
+    {
+      platform: 'X',
+      handle: '@portaltela',
+      sentiment: 'Debate acelerado',
+      engagement: '+2.4k mencoes',
+    },
+    {
+      platform: 'Threads',
+      handle: '@portaltela.debate',
+      sentiment: 'Conversas quentes',
+      engagement: '+820 respostas',
+    },
+    {
+      platform: 'TikTok',
+      handle: '@portaltela.video',
+      sentiment: 'Clipes em giro',
+      engagement: '+640 comentarios',
+    },
+    {
+      platform: 'Facebook',
+      handle: '@tela.portal',
+      sentiment: 'Compartilhamentos em alta',
+      engagement: '+410 interacoes',
+    },
+    {
+      platform: 'Instagram',
+      handle: '@tela.portal',
+      sentiment: 'Stories em giro',
+      engagement: '+1.9k reproducoes',
+    },
   ]
 
-  return posts.slice(0, 3).map((post, index) => {
+  return posts.slice(0, 6).map((post, index) => {
     const tone = platforms[index % platforms.length]
 
     return {
@@ -88,114 +121,10 @@ const buildSocialBuzz = (posts: HomeStory[]) => {
       handle: tone.handle,
       sentiment: tone.sentiment,
       engagement: tone.engagement,
-      quote: `"${post.title}" segue entre os assuntos mais comentados por causa do impacto direto no cotidiano e nos proximos desdobramentos da pauta.`,
+      quote: `${post.title} segue puxando reacoes e comentarios por causa do impacto imediato da pauta e dos proximos desdobramentos.`,
       relatedStory: post,
     }
   })
-}
-
-const buildInitialComments = (posts: HomeStory[]) => {
-  const names = [
-    ['Mariana Costa', 'Assinante premium'],
-    ['Joao Ribeiro', 'Leitor fiel'],
-    ['Camila Santos', 'Editora convidada'],
-  ]
-
-  return posts.slice(0, 3).map((post, index) => ({
-    id: `seed-comment-${post.id}`,
-    author: names[index]?.[0] || 'Leitor do portal',
-    role: names[index]?.[1] || 'Comunidade Portal Tela',
-    message: `Boa cobertura sobre ${post.title.toLowerCase()}. O texto entrega contexto rapido e deixa claro o que muda daqui para frente.`,
-    createdAt: new Date(Date.now() - (index + 1) * 1000 * 60 * 75).toISOString(),
-    likes: 18 - index * 3,
-  }))
-}
-
-const economicIndicators: EconomicIndicator[] = [
-  {
-    id: 'ibovespa',
-    label: 'Ibovespa',
-    value: '128.450 pts',
-    change: '+0,84%',
-    note: 'Acoes e bancos',
-    direction: 'up',
-  },
-  {
-    id: 'dolar',
-    label: 'Dolar comercial',
-    value: 'R$ 5,12',
-    change: '-0,37%',
-    note: 'Cambio',
-    direction: 'down',
-  },
-  {
-    id: 'euro',
-    label: 'Euro',
-    value: 'R$ 5,58',
-    change: '-0,12%',
-    note: 'Moedas globais',
-    direction: 'down',
-  },
-  {
-    id: 'bitcoin',
-    label: 'Bitcoin',
-    value: 'US$ 63,4 mil',
-    change: '+1,92%',
-    note: 'Criptoativos',
-    direction: 'up',
-  },
-  {
-    id: 'selic',
-    label: 'Selic',
-    value: '10,50% ao ano',
-    change: 'Estavel',
-    note: 'Juros basicos',
-    direction: 'flat',
-  },
-]
-
-const weatherForecast: WeatherForecast = {
-  city: 'Sao Paulo, SP',
-  temperature: '24°C',
-  conditionLabel: 'Sol entre nuvens ao longo da tarde',
-  feelsLike: '26°C',
-  humidity: '68%',
-  wind: '12 km/h',
-  updatedAt: '12h40',
-  days: [
-    {
-      id: 'qui',
-      day: 'Qui',
-      condition: 'partly-cloudy',
-      high: '26°C',
-      low: '18°C',
-      rainChance: '20%',
-    },
-    {
-      id: 'sex',
-      day: 'Sex',
-      condition: 'rain',
-      high: '23°C',
-      low: '17°C',
-      rainChance: '70%',
-    },
-    {
-      id: 'sab',
-      day: 'Sab',
-      condition: 'cloudy',
-      high: '21°C',
-      low: '15°C',
-      rainChance: '35%',
-    },
-    {
-      id: 'dom',
-      day: 'Dom',
-      condition: 'sunny',
-      high: '25°C',
-      low: '16°C',
-      rainChance: '10%',
-    },
-  ],
 }
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -221,7 +150,10 @@ export default async function HomePage() {
       ? configuredFeatured
       : uniquePosts(fallbackFeatured.map((post) => normalizePost(post)))
 
-  const heroPost = normalizePost(homeData.hero_post as Post | number | null | undefined) ?? featuredPosts[0] ?? null
+  const heroPost =
+    normalizePost(homeData.hero_post as Post | number | null | undefined) ??
+    featuredPosts[0] ??
+    null
   const heroTitle = homeData.hero_title ?? heroPost?.title ?? 'Portal Tela'
   const heroSubtitle =
     homeData.hero_subtitle ??
@@ -234,11 +166,8 @@ export default async function HomePage() {
   )
 
   const editorialPool = uniquePosts([heroPost, ...featuredPosts, ...latestPool])
-  const supportingStories = uniquePosts(
-    editorialPool.filter((post) => post.id !== heroPost?.id),
-  )
+  const supportingStories = uniquePosts(editorialPool.filter((post) => post.id !== heroPost?.id))
   const sideStories = supportingStories.slice(0, 4)
-  const trendingStories = uniquePosts([...sideStories, ...latestPool, ...supportingStories]).slice(0, 5)
   const principalStories = supportingStories.slice(0, 8)
   const latestStories = uniquePosts(latestPool).slice(0, 8)
 
@@ -269,7 +198,9 @@ export default async function HomePage() {
       title: category.title,
       slug: category.slug,
       posts: uniquePosts(
-        (await fetchPostsByCategory(category.id, category.limit)).map((post) => normalizePost(post)),
+        (await fetchPostsByCategory(category.id, category.limit)).map((post) =>
+          normalizePost(post),
+        ),
       ),
     })),
   )
@@ -280,7 +211,6 @@ export default async function HomePage() {
       : buildFallbackShelves(editorialPool)
 
   const socialBuzz = buildSocialBuzz(uniquePosts([heroPost, ...sideStories, ...latestPool]))
-  const initialComments = buildInitialComments(uniquePosts([heroPost, ...latestPool]))
 
   return (
     <PortalHomePage
@@ -293,14 +223,10 @@ export default async function HomePage() {
       heroStory={heroPost}
       heroSubtitle={heroSubtitle}
       heroTitle={heroTitle}
-      economicIndicators={economicIndicators}
-      weatherForecast={weatherForecast}
-      initialComments={initialComments}
       latestStories={latestStories}
       principalStories={principalStories}
       sideStories={sideStories}
       socialBuzz={socialBuzz}
-      trendingStories={trendingStories}
     />
   )
 }

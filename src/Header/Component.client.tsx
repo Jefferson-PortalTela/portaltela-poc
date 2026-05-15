@@ -9,6 +9,8 @@ import type { Header } from '@/payload-types'
 import { Logo } from '@/components/Logo/Logo'
 import { Menu, MapPin } from 'lucide-react'
 import { HeaderNav } from './Nav'
+import Banner from 'public/images/banner.png'
+import Image from 'next/image'
 
 interface HeaderClientProps {
   data: Header
@@ -158,7 +160,13 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
             </div>
 
             <div className="py-6">
-              <div className="mx-auto h-[72px] max-w-[620px] bg-slate-200/80 dark:bg-[linear-gradient(135deg,rgba(111,45,189,0.2),rgba(255,255,255,0.05))]" />
+              <Image
+                src={Banner}
+                alt="Publicidade"
+                width={1200}
+                height={100}
+                className="h-auto w-full rounded object-cover"
+              />
             </div>
 
             <div className="grid gap-6 overflow-hidden border-b border-slate-200/90 pb-6 lg:grid-cols-[160px_minmax(0,1fr)_160px] lg:items-end dark:border-white/10">
@@ -171,7 +179,10 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
                 </p>
               </div>
 
-              <Link className="mx-auto inline-flex w-fit shrink-0 items-center justify-center" href="/">
+              <Link
+                className="mx-auto inline-flex w-fit shrink-0 items-center justify-center"
+                href="/"
+              >
                 <Logo className="h-16 max-w-[13.5rem]" loading="eager" priority="high" />
               </Link>
 

@@ -33,15 +33,20 @@ export const HeaderNav: React.FC<{ condensed?: boolean; data: HeaderType }> = ({
   const fallbackNavItems: NonNullable<HeaderType['navItems']> = [
     { link: { type: 'custom', url: '/', label: 'Inicio' } },
     { link: { type: 'custom', url: '/search?q=Esportes', label: 'Esportes' } },
-    { link: { type: 'custom', url: '/search?q=Negocios%20e%20Tecnologia', label: 'Negocios e Tecnologia' } },
+    {
+      link: {
+        type: 'custom',
+        url: '/search?q=Negocios%20e%20Tecnologia',
+        label: 'Negocios e Tecnologia',
+      },
+    },
     { link: { type: 'custom', url: '/search?q=Policial', label: 'Policial' } },
     { link: { type: 'custom', url: '/search?q=Cristao', label: 'Cristao' } },
     { link: { type: 'custom', url: '/search?q=Videos', label: 'Videos' } },
     { link: { type: 'custom', url: '/posts', label: 'Mais' } },
   ]
 
-  const navItems =
-    data?.navItems && data.navItems.length > 0 ? data.navItems : fallbackNavItems
+  const navItems = data?.navItems && data.navItems.length > 0 ? data.navItems : fallbackNavItems
 
   return (
     <nav
@@ -67,7 +72,10 @@ export const HeaderNav: React.FC<{ condensed?: boolean; data: HeaderType }> = ({
       >
         {!condensed ? <ThemeSelector /> : null}
 
-        <form action="/search" className={`hidden md:flex ${condensed ? 'md:w-[210px]' : 'md:w-[240px]'}`}>
+        <form
+          action="/search"
+          className={`hidden md:flex ${condensed ? 'md:w-[210px]' : 'md:w-[240px]'}`}
+        >
           <div
             className={`flex w-full items-center gap-2 rounded-full border border-slate-200 bg-white px-3 shadow-[0_8px_20px_rgba(15,23,42,0.05)] dark:border-white/10 dark:bg-[#101524] dark:shadow-[0_10px_28px_rgba(0,0,0,0.22)] ${condensed ? 'h-8' : 'h-9'}`}
           >
