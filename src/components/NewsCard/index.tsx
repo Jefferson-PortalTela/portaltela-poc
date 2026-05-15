@@ -11,11 +11,9 @@ export interface PostCardData {
   slug: string
   heroImage?: Media | null
   categories?: (Category | string)[] | null
-  meta?:
-    | {
-        description?: string | null
-      }
-    | null
+  meta?: {
+    description?: string | null
+  } | null
   populatedAuthors?:
     | {
         id?: string | null
@@ -40,12 +38,11 @@ export const NewsCard: React.FC<{ post: PostCardData }> = ({ post }) => {
   return (
     <article className="border border-border rounded-lg overflow-hidden bg-card hover:shadow-md transition-shadow">
       {heroImage && (
-        <div className="relative w-full aspect-video overflow-hidden">
+        <div className="w-full aspect-video overflow-hidden">
           <MediaComponent
             resource={heroImage}
             alt={imageAlt}
-            fill
-            imgClassName="object-cover"
+            imgClassName="object-cover w-full h-full"
             size="(max-width: 768px) 100vw, 33vw"
           />
         </div>
